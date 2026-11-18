@@ -19,6 +19,9 @@ Nothing machine-specific or proprietary belongs here.
 - `settings.talon`: overrides of community settings (macOS).
 - `soft_newline.talon`: `soft line` / `soft paragraph` in dictation mode
   (Shift+Return, for chat apps where Return sends).
+- `cheatsheets/`: printable references (HTML source + PDF). Print at 100%.
+  - `talon-cheat-sheet`: two-page basics for talonhub/community.
+  - `talon-alphabet-card`: cut-out alphabet card, 3-row and 4-row versions.
 
 ## License
 

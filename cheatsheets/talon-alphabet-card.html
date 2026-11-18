@@ -1,0 +1,87 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Talon Alphabet Card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;600;700&family=Archivo:wght@800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Cut-out alphabet cards. All sizes in physical units so the print is exact.
+   Tiles are 110% of the full cheat sheet's printed tiles (0.56in -> 0.62in, 17pt -> 18.7pt, 8.6pt -> 9.5pt). */
+:root {
+  --ink: #000; --muted: #444; --rule: #bbb; --say: #005a63;
+  --f-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Archivo Narrow", "Arial Narrow", "Helvetica Neue", sans-serif;
+  --f-say: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+  --tw: 0.62in;   /* tile width */
+  --th: 0.54in;   /* tile height */
+  --gap: 0.045in;
+}
+@page { size: letter; margin: 0.4in; }
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { margin: 0; padding: 0.4in; background: #fff; color: var(--ink); font-family: var(--f-body); }
+@media print { body { padding: 0; } }
+
+.sheet { display: flex; flex-direction: column; align-items: flex-start; gap: 0.45in; }
+.label { font-size: 9pt; color: var(--muted); margin: 0 0 0.08in; }
+
+/* Dashed cut line sits 0.1in outside the card's solid edge */
+.cut { border: 1px dashed #777; padding: 0.1in; position: relative; }
+.cut::before { content: "✂"; position: absolute; top: -0.09in; left: 0.25in; font-size: 11pt; line-height: 1; background: #fff; color: #555; padding: 0 2px; }
+.card { background: #fff; border: 1.5px solid var(--ink); border-radius: 0.08in; padding: 0.1in 0.12in 0.09in; }
+
+.card h1 { font-family: var(--f-display); font-weight: 800; font-size: 10.5pt; letter-spacing: 0.01em; margin: 0 0 0.07in; display: flex; justify-content: space-between; align-items: baseline; gap: 0.2in; }
+.card h1 small { font-family: var(--f-body); font-weight: 400; font-size: 8pt; color: var(--muted); letter-spacing: 0; }
+
+.rows { display: flex; flex-direction: column; gap: var(--gap); align-items: center; }
+.row { display: flex; gap: var(--gap); }
+.t { width: var(--tw); height: var(--th); box-sizing: border-box; border: 1px solid var(--rule); border-radius: 0.04in; background: #fff;
+     display: flex; flex-direction: column; align-items: center; justify-content: center; }
+.t b { font-family: var(--f-display); font-weight: 800; font-size: 18.7pt; line-height: 1; }
+.t span { font-family: var(--f-say); font-weight: 600; font-size: 9.5pt; line-height: 1.15; color: var(--say); margin-top: 0.02in; }
+.t.hard { border-color: var(--say); border-width: 1.5px; }
+
+.foot { font-size: 8pt; color: var(--muted); margin: 0.06in 0 0; text-align: center; }
+.foot { width: 0; min-width: 100%; } /* footer wraps to the tile width instead of widening the card */
+.foot { display: grid; grid-template-columns: 1fr 1fr; text-align: left; margin-top: 0.08in; }
+.foot > div:last-child { border-left: 1px solid var(--rule); padding-left: 0.12in; }
+.foot > div:first-child { padding-right: 0.12in; justify-self: end; } /* left tips hug the divider; text stays left-aligned */
+.foot p { margin: 0.02in 0 0; }
+.foot code { font-family: var(--f-say); font-weight: 600; color: var(--say); font-size: 7.5pt; }
+</style>
+</head><body>
+<div class="sheet" id="sheet"></div>
+
+<script>
+const ABC = [["a","air"],["b","bat"],["c","cap"],["d","drum"],["e","each"],["f","fine"],["g","gust"],["h","harp"],["i","sit"],["j","jury"],["k","crunch"],["l","look"],["m","made"],["n","near"],["o","odd"],["p","pit"],["q","quench"],["r","red"],["s","sun"],["t","trap"],["u","urge"],["v","vest"],["w","whale"],["x","plex"],["y","yank"],["z","zip"]];
+const HARD = new Set(["i","k","x"]); // spoken word doesn't start with the letter
+
+function card(rowSizes, label) {
+  let i = 0;
+  const rows = rowSizes.map(n => {
+    const tiles = ABC.slice(i, i += n).map(([l, w]) =>
+      `<div class="t${HARD.has(l) ? " hard" : ""}"><b>${l}</b><span>${w}</span></div>`).join("");
+    return `<div class="row">${tiles}</div>`;
+  }).join("");
+  return `<div><p class="label">${label}</p><div class="cut"><div class="card">
+    <h1>Talon alphabet <small>say the word, get the letter</small></h1>
+    <div class="rows">${rows}</div>
+    <div class="foot">
+      <div>
+        <p>Chain: <code>air bat cap</code> → abc</p>
+        <p>Capital: <code>shift air</code> → A</p>
+        <p>All caps: <code>ship air bat</code> → AB</p>
+        <p>Teal border = word doesn't start with its letter</p>
+      </div>
+      <div>
+        <p><code>sentence …</code> → Capitalizes first word</p>
+        <p><code>title …</code> → Capitalizes Every Word</p>
+        <p><code>scratch that</code> → delete what you just said</p>
+        <p><code>numb 42</code> → types 42</p>
+      </div>
+    </div>
+  </div></div></div>`;
+}
+
+document.getElementById("sheet").innerHTML =
+  card([9, 9, 8], "Option A: 3 rows") +
+  card([7, 7, 6, 6], "Option B: 4 rows, narrower");
+</script>
+</body></html>

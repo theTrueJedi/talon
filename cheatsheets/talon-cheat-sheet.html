@@ -1,0 +1,264 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<style>body{margin:0}</style>
+<title>Talon Pocket Sheet</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@400;600;700&family=Archivo:wght@800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style>
+/* Layout: two letter-size "sheets"; each a 3-column grid of command blocks. Spoken words in mono, results in narrow sans. */
+:root {
+  --paper: #ffffff;
+  --sheet: #f4f6f8;
+  --ink: #132130;
+  --muted: #5b6876;
+  --rule: #d5dbe2;
+  --say: #0b6e78;        /* what you speak */
+  --say-bg: #e3f2f3;
+  --warn: #9a4b00;
+  --f-display: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-body: "Archivo Narrow", "Arial Narrow", "Helvetica Neue", sans-serif;
+  --f-say: "IBM Plex Mono", ui-monospace, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --paper: #0f161d; --sheet: #172129; --ink: #e5ebf0; --muted: #94a2af; --rule: #2b3946;
+  --say: #6fd3dc; --say-bg: #133238; --warn: #f0a560; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --paper: #0f161d; --sheet: #172129; --ink: #e5ebf0; --muted: #94a2af; --rule: #2b3946;
+  --say: #6fd3dc; --say-bg: #133238; --warn: #f0a560; color-scheme: dark }
+
+body { background: var(--paper); color: var(--ink); font-family: var(--f-body); font-size: 14px; line-height: 1.3;
+  padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); padding-block: 20px; }
+.page { max-width: 1040px; margin: 0 auto 28px; background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; padding: 22px 24px; }
+header { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 16px; border-bottom: 2px solid var(--ink); padding-bottom: 8px; margin-bottom: 14px; }
+h1 { font-family: var(--f-display); font-weight: 800; font-size: 26px; letter-spacing: -0.01em; margin: 0; text-wrap: balance; }
+.meta { color: var(--muted); font-size: 12.5px; }
+.legend { font-size: 12.5px; color: var(--muted); }
+.grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px 20px; }
+.span2 { grid-column: span 2; } .span3 { grid-column: 1 / -1; }
+section { min-width: 0; break-inside: avoid; }
+h2 { font-family: var(--f-body); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.09em; color: var(--muted); margin: 0 0 5px; padding-bottom: 3px; border-bottom: 1px solid var(--rule); }
+dl { margin: 0; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 3px 10px; align-items: baseline; }
+dt { margin: 0; } dd { margin: 0; color: var(--ink); }
+.s { font-family: var(--f-say); font-weight: 600; font-size: 0.86em; color: var(--say); background: var(--say-bg); padding: 0 4px; border-radius: 3px; white-space: nowrap; }
+.o { font-family: var(--f-say); font-size: 0.86em; }
+.note { color: var(--muted); font-size: 12.5px; margin: 5px 0 0; }
+.warn { color: var(--warn); font-weight: 600; }
+/* Alphabet: the one bold element */
+.abc { display: grid; grid-template-columns: repeat(13, minmax(0, 1fr)); gap: 4px; }
+.abc div { border: 1px solid var(--rule); background: var(--paper); border-radius: 4px; text-align: center; padding: 3px 0 4px; }
+.abc b { display: block; font-family: var(--f-display); font-weight: 800; font-size: 20px; line-height: 1.05; }
+.abc span { font-family: var(--f-say); font-weight: 600; font-size: 11.5px; color: var(--say); }
+.sym { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2px 12px; }
+.sym p { margin: 0; display: flex; gap: 6px; align-items: baseline; }
+.sym .o { min-width: 1.1em; text-align: center; font-weight: 600; }
+@media (max-width: 760px) {
+  .grid { grid-template-columns: minmax(0, 1fr); } .span2 { grid-column: auto; }
+  .abc { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+}
+@media print {
+  :root, :root[data-theme="dark"] { --paper:#fff; --sheet:#fff; --ink:#000; --muted:#444; --rule:#bbb; --say:#005a63; --say-bg:#e6f3f4; --warn:#8a4000; color-scheme: light; }
+  @page { size: letter; margin: 0.35in; }
+  body { padding: 0; font-size: 11.6pt; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .page { border: 0; padding: 0; margin: 0; max-width: none; border-radius: 0; break-after: page; }
+  .page:last-child { break-after: auto; }
+  .grid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 16px 20px; }
+  .span2 { grid-column: span 2 !important; }
+  .abc { grid-template-columns: repeat(13, minmax(0, 1fr)) !important; }
+  h1 { font-size: 20pt; } .abc b { font-size: 17pt; } .abc span { font-size: 8.6pt; }
+  .noprint { display: none; }
+}
+</style>
+</head><body>
+
+
+<div class="page">
+  <header>
+    <h1>Talon · Speaking basics</h1>
+    <span class="legend"><span class="s">teal</span> = what you say · <span class="o">mono</span> = what you get</span>
+  </header>
+  <div class="grid">
+    <section class="span3">
+      <h2>Alphabet: say the word, get the letter</h2>
+      <div class="abc">
+        <div><b>a</b><span>air</span></div><div><b>b</b><span>bat</span></div><div><b>c</b><span>cap</span></div><div><b>d</b><span>drum</span></div><div><b>e</b><span>each</span></div><div><b>f</b><span>fine</span></div><div><b>g</b><span>gust</span></div><div><b>h</b><span>harp</span></div><div><b>i</b><span>sit</span></div><div><b>j</b><span>jury</span></div><div><b>k</b><span>crunch</span></div><div><b>l</b><span>look</span></div><div><b>m</b><span>made</span></div>
+        <div><b>n</b><span>near</span></div><div><b>o</b><span>odd</span></div><div><b>p</b><span>pit</span></div><div><b>q</b><span>quench</span></div><div><b>r</b><span>red</span></div><div><b>s</b><span>sun</span></div><div><b>t</b><span>trap</span></div><div><b>u</b><span>urge</span></div><div><b>v</b><span>vest</span></div><div><b>w</b><span>whale</span></div><div><b>x</b><span>plex</span></div><div><b>y</b><span>yank</span></div><div><b>z</b><span>zip</span></div>
+      </div>
+      <p class="note">Chain them: <span class="s">air bat cap</span> → <span class="o">abc</span>. Capitals: <span class="s">shift air</span> → <span class="o">A</span>, or <span class="s">ship air bat</span> → <span class="o">AB</span>. Watch out: <b>i = sit</b>, <b>k = crunch</b>, <b>x = plex</b>.</p>
+    </section>
+
+    <section>
+      <h2>On / off &amp; modes</h2>
+      <dl>
+        <dt><span class="s">talon sleep</span></dt><dd>stop listening</dd>
+        <dt><span class="s">talon wake</span></dt><dd>start listening</dd>
+        <dt><span class="s">command mode</span></dt><dd>commands only (default)</dd>
+        <dt><span class="s">dictation mode</span></dt><dd>everything gets typed</dd>
+        <dt><span class="s">mixed mode</span></dt><dd>commands + typing</dd>
+      </dl>
+      <p class="note">Sleep before talking to people. Anything that isn't a command is ignored in command mode.</p>
+    </section>
+
+    <section>
+      <h2>Typing words</h2>
+      <dl>
+        <dt><span class="s">say …</span></dt><dd>types it as spoken</dd>
+        <dt><span class="s">sentence …</span></dt><dd>Capitalizes first word</dd>
+        <dt><span class="s">title …</span></dt><dd>Capitalizes Every Word</dd>
+        <dt><span class="s">scratch that</span></dt><dd>delete what you just said</dd>
+        <dt><span class="s">numb 42</span></dt><dd>types <span class="o">42</span></dd>
+      </dl>
+      <p class="note">In dictation mode: <span class="s">new line</span>, <span class="s">new paragraph</span>, <span class="s">comma</span>, <span class="s">period</span>.</p>
+    </section>
+
+    <section>
+      <h2>Keys &amp; shortcuts</h2>
+      <dl>
+        <dt><span class="s">command sun</span></dt><dd><span class="o">⌘S</span> (any modifier + key)</dd>
+        <dt><span class="s">command shift trap</span></dt><dd><span class="o">⌘⇧T</span></dd>
+        <dt><span class="s">option</span> <span class="s">control</span></dt><dd><span class="o">⌥</span> <span class="o">⌃</span></dd>
+        <dt><span class="s">return</span> · <span class="s">tab</span></dt><dd>Return · Tab</dd>
+        <dt><span class="s">wipe</span></dt><dd>Backspace</dd>
+        <dt><span class="s">escape</span> · <span class="s">space</span></dt><dd>Esc · Space</dd>
+        <dt><span class="s">up</span> <span class="s">down</span> <span class="s">left</span> <span class="s">right</span></dt><dd>arrow keys</dd>
+        <dt><span class="s">press …</span></dt><dd>any key by name</dd>
+      </dl>
+    </section>
+
+    <section class="span2">
+      <h2>Symbols (command mode)</h2>
+      <div class="sym">
+        <p><span class="o">.</span><span class="s">dot</span> / <span class="s">period</span></p>
+        <p><span class="o">,</span><span class="s">comma</span></p>
+        <p><span class="o">:</span><span class="s">colon</span></p>
+        <p><span class="o">;</span><span class="s">semi</span></p>
+        <p><span class="o">?</span><span class="s">question</span></p>
+        <p><span class="o">!</span><span class="s">bang</span></p>
+        <p><span class="o">-</span><span class="s">dash</span> / <span class="s">minus</span></p>
+        <p><span class="o">_</span><span class="s">underscore</span></p>
+        <p><span class="o">/</span><span class="s">slash</span></p>
+        <p><span class="o">\</span><span class="s">backslash</span></p>
+        <p><span class="o">*</span><span class="s">star</span></p>
+        <p><span class="o">#</span><span class="s">hash</span></p>
+        <p><span class="o">@</span><span class="s">at sign</span></p>
+        <p><span class="o">&amp;</span><span class="s">amper</span></p>
+        <p><span class="o">=</span><span class="s">equals</span></p>
+        <p><span class="o">+</span><span class="s">plus</span></p>
+        <p><span class="o">( )</span><span class="s">paren</span> / <span class="s">R paren</span></p>
+        <p><span class="o">[ ]</span><span class="s">brack</span> / <span class="s">R brack</span></p>
+        <p><span class="o">{ }</span><span class="s">brace</span> / <span class="s">R brace</span></p>
+        <p><span class="o">&lt; &gt;</span><span class="s">angle</span> / <span class="s">rangle</span></p>
+        <p><span class="o">' "</span><span class="s">quote</span> / <span class="s">dub quote</span></p>
+        <p><span class="o">$ %</span><span class="s">dollar</span> / <span class="s">percent</span></p>
+      </div>
+    </section>
+
+    <section>
+      <h2>When you're stuck</h2>
+      <dl>
+        <dt><span class="s">help active</span></dt><dd>every command for this app</dd>
+        <dt><span class="s">help alphabet</span></dt><dd>alphabet on screen</dd>
+        <dt><span class="s">help symbols</span></dt><dd>all symbol names</dd>
+        <dt><span class="s">help close</span></dt><dd>hide help</dd>
+        <dt><span class="s">command history</span></dt><dd>what Talon heard</dd>
+      </dl>
+      <p class="note">Speak a short phrase, then pause. Talon acts on the pause.</p>
+    </section>
+  </div>
+</div>
+
+<div class="page">
+  <header>
+    <h1>Talon · Editing, apps &amp; mouse</h1>
+    <span class="meta">talonhub/community · checked against the installed scripts, Nov 2026</span>
+  </header>
+  <div class="grid">
+    <section class="span2">
+      <h2>Edit = action + target</h2>
+      <dl>
+        <dt>Actions</dt><dd><span class="s">select</span> <span class="s">clear</span> <span class="s">copy</span> <span class="s">cut</span> <span class="s">paste</span> <span class="s">go before</span> <span class="s">go after</span></dd>
+        <dt>Targets</dt><dd><span class="s">word</span> <span class="s">line</span> <span class="s">paragraph</span> <span class="s">all</span> <span class="s">word left</span> <span class="s">word right</span> <span class="s">line start</span> <span class="s">line end</span> <span class="s">way up</span> <span class="s">way down</span></dd>
+        <dt>Examples</dt><dd><span class="s">select line</span> · <span class="s">clear word left</span> · <span class="s">copy all</span> · <span class="s">go after line</span></dd>
+      </dl>
+    </section>
+
+    <section>
+      <h2>Quick edits</h2>
+      <dl>
+        <dt><span class="s">copy that</span></dt><dd>⌘C</dd>
+        <dt><span class="s">paste that</span></dt><dd>⌘V</dd>
+        <dt><span class="s">cut that</span></dt><dd>⌘X</dd>
+        <dt><span class="s">undo that</span></dt><dd>⌘Z</dd>
+        <dt><span class="s">redo that</span></dt><dd>⌘⇧Z</dd>
+        <dt><span class="s">file save</span></dt><dd>⌘S</dd>
+      </dl>
+    </section>
+
+    <section>
+      <h2>Moving the cursor</h2>
+      <dl>
+        <dt><span class="s">head</span> / <span class="s">tail</span></dt><dd>line start / end</dd>
+        <dt><span class="s">go top</span> / <span class="s">go bottom</span></dt><dd>file start / end</dd>
+        <dt><span class="s">slap</span></dt><dd>new line below</dd>
+        <dt><span class="s">new line above</span></dt><dd>new line above</dd>
+        <dt><span class="s">find it</span></dt><dd>⌘F</dd>
+        <dt><span class="s">next one</span></dt><dd>next match</dd>
+      </dl>
+    </section>
+
+    <section>
+      <h2>Formatters (for code)</h2>
+      <dl>
+        <dt><span class="s">snake</span></dt><dd><span class="o">hello_world</span></dd>
+        <dt><span class="s">camel</span></dt><dd><span class="o">helloWorld</span></dd>
+        <dt><span class="s">hammer</span></dt><dd><span class="o">HelloWorld</span></dd>
+        <dt><span class="s">kebab</span></dt><dd><span class="o">hello-world</span></dd>
+        <dt><span class="s">constant</span></dt><dd><span class="o">HELLO_WORLD</span></dd>
+        <dt><span class="s">smash</span></dt><dd><span class="o">helloworld</span></dd>
+        <dt><span class="s">dotted</span></dt><dd><span class="o">hello.world</span></dd>
+        <dt><span class="s">string</span></dt><dd><span class="o">'hello world'</span></dd>
+      </dl>
+      <p class="note">Say formatter + words: <span class="s">snake hello world</span>. <span class="s">help format</span> lists all.</p>
+    </section>
+
+    <section>
+      <h2>Apps &amp; windows</h2>
+      <dl>
+        <dt><span class="s">focus chrome</span></dt><dd>switch to an app</dd>
+        <dt><span class="s">running list</span></dt><dd>names to use with focus</dd>
+        <dt><span class="s">launch …</span></dt><dd>open an app</dd>
+        <dt><span class="s">snap left</span> / <span class="s">right</span></dt><dd>window to half screen</dd>
+        <dt><span class="s">snap full</span></dt><dd>fill the screen</dd>
+        <dt><span class="s">window close</span></dt><dd>close window</dd>
+      </dl>
+    </section>
+
+    <section>
+      <h2>Browser tabs</h2>
+      <dl>
+        <dt><span class="s">tab new</span></dt><dd>open tab</dd>
+        <dt><span class="s">tab close</span></dt><dd>close tab</dd>
+        <dt><span class="s">tab next</span> / <span class="s">tab last</span></dt><dd>switch tab</dd>
+        <dt><span class="s">tab 3</span></dt><dd>jump to tab 3</dd>
+        <dt><span class="s">tab reopen</span></dt><dd>restore closed tab</dd>
+        <dt><span class="s">go back</span> / <span class="s">go forward</span></dt><dd>history</dd>
+      </dl>
+    </section>
+
+    <section class="span2">
+      <h2>Mouse</h2>
+      <dl>
+        <dt><span class="s">mouse grid</span></dt><dd>numbered 3×3 grid; say <span class="s">1</span>–<span class="s">9</span> to zoom in on a square, repeat until the pointer is on target</dd>
+        <dt><span class="s">grid off</span></dt><dd>close the grid (<span class="s">grid back</span> undoes one zoom)</dd>
+        <dt><span class="s">touch</span> · <span class="s">righty</span> · <span class="s">duke</span></dt><dd>left click · right click · double click</dd>
+        <dt><span class="s">drag</span> … <span class="s">end drag</span></dt><dd>hold the button, move, release</dd>
+        <dt><span class="s">wheel down</span> / <span class="s">wheel up</span></dt><dd>scroll</dd>
+      </dl>
+    </section>
+
+    <section>
+      <h2>First-week habits</h2>
+      <p class="note" style="margin-top:0">Pause between commands, and keep your volume even. If something misfires, say <span class="s">command history</span> to see what Talon heard. <span class="warn">Never edit files in the community folder.</span> Put your own commands in a separate folder.</p>
+    </section>
+  </div>
+</div>
+</body></html>
