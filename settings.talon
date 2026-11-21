@@ -7,3 +7,6 @@ settings():
     # mouse button, including physically held ones. Mouse/keyboard clicks can
     # register as "pop", so real click-and-drags got dropped.
     user.mouse_enable_pop_stops_drag = false
+
+    # Knob scroll step per detent, px (controller default 40). 120 chosen 2026-11-21.
+    user.talon_controller_scroll_amount = 120
