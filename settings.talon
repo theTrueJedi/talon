@@ -10,3 +10,5 @@ settings():
 
     # Knob scroll step per detent, px (controller default 40). 120 chosen 2026-11-21.
     user.talon_controller_scroll_amount = 120
+    # Wheel-notch mode (kept 2026-11-21): snap carousels advance. false = back to 120 px.
+    user.talon_controller_scroll_by_lines = true
