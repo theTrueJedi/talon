@@ -1,3 +1,4 @@
+mode: command
 mode: dictation
 -
 ^soft line$:
